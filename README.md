@@ -56,9 +56,7 @@ pip install transformers
 
 ## 📘 Usage Example
 
-```python
-manual under construction - please waiting...
-```
+CineWiz release a first manual instructions version for RAG Enginering on the ./manual/README.MD for completed and first underconstruction version by several pourposes to LLMs and RAG with GEN-AI capabilities with the intuitive command line python use definition by #asytrick
 
 ## 💡 Why Cinewiz?
 

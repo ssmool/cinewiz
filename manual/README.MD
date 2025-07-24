@@ -152,12 +152,12 @@ Would you like this manual exported as a **PDF** or included directly in your Gi
 
 ## set_sign(author,email): add sing to memory current file writed proccess with your author title like author='cinewiz #genai' and email='example@domain.xyz' ##
 
-## by:#asytrick
+## by:#asytrick ##
 
-## email:eusmool@gmail.com
+## email:eusmool@gmail.com ##
 
-##git:github.com/ssmool/cinewiz
+## git:github.com/ssmool/cinewiz ##
 
-## ver:1.0 BETA
-## stage:Underconstruction
-## Platform:Python 3+
+## ver:1.0 BETA ##
+## stage:Underconstruction ##
+## Platform:Python 3+ ##

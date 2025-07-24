@@ -126,7 +126,7 @@ Would you like this manual exported as a **PDF** or included directly in your Gi
 
 ## add_read_lib_uri(_buff_uri): configure and add URI for webcrawling by GEN-AI and RAG Text Generation or research like 'https://en.wikipedia.org/wiki/Walt_Disney' or 'https://en.wikipedia.org/wiki/#0x00_keyword' - its create a #0x00_keyword a input the keyword for your webcrawling by scaffolding between the dictionaries or lists ##
 
-##add_read_lib(_buff_uri): configure and add URI for webcrawling by GEN-AI and RAG Image Generation or research like 'https://www.pinterest.com/search/pins/?q=#0x00_keyword' or 'https://www.google.com/search?udm=2&q=#0x00_keyword' - its create a #0x00_keyword a input the keyword for your webcrawling by scaffolding between the dictionaries or lists or by set directy URI for image 'https://i0.wp.com/www.parksavers.com/wp-content/uploads/2021/12/Incredicoaster-scaled.jpg?resize=1200%2C800&quality=89&ssl=1' ##
+## add_read_lib(_buff_uri): configure and add URI for webcrawling by GEN-AI and RAG Image Generation or research like 'https://www.pinterest.com/search/pins/?q=#0x00_keyword' or 'https://www.google.com/search?udm=2&q=#0x00_keyword' - its create a #0x00_keyword a input the keyword for your webcrawling by scaffolding between the dictionaries or lists or by set directy URI for image 'https://i0.wp.com/www.parksavers.com/wp-content/uploads/2021/12/Incredicoaster-scaled.jpg?resize=1200%2C800&quality=89&ssl=1' ##
 
 ## set_picture(image_file): to set collection by images on the collection seted by image_file for local images or search_images(key_words) return on local path with prefix called by '{image_file}_rag_0x_sx_nbx0.png' ##
 

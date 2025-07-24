@@ -57,13 +57,7 @@ pip install transformers
 ## 📘 Usage Example
 
 ```python
-from cinewiz import CineWiz
-
-wiz = CineWiz()
-wiz.set_prompt("cyberpunk city skyline")
-wiz.enable_qrcode("https://example.com/more-info")
-wiz.generate_image(save_path="artwork.png")
-wiz.export_text_with_webcontext("The future of smart cities", lang="en")
+manual under construction - please waiting...
 ```
 
 ## 💡 Why Cinewiz?

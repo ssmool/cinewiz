@@ -74,3 +74,6 @@ This project is licensed under the **MIT License**. Feel free to use, adapt, and
 
 > **Cinewiz** – Creative AI for Multimedia Content, Open Source and Built in Python.
 
+## 📦 CineOS Barsotti @buskplay - RAG PARTS:
+
+Cinewiz is a part of the CineOS Barsotti @buskplay - Unix Like project and aligned with global goals for decentralized AI-assisted creative AI Orquestrators by LLMs and GEN-AI by generative creativity.

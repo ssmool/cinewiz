@@ -299,8 +299,9 @@ We welcome contributions to **cinewiz**\! If you have suggestions, bug reports, 
 
 ## 📄 License
 
-This project is licensed under the **[CREATIVE COMMONS LICENCSE](https://github.com/ssmool/cinewiz/tree/main?tab=CC0-1.0-1-ov-file#readme)** - see the [LICENSE](https://github.com/ssmool/cinewiz/tree/main?tab=CC0-1.0-1-ov-file#readme) file for details.
+This project is licensed under the **[CREATIVE COMMONS LICENCSE](../README.md/tree/main?tab=CC0-1.0-1-ov-file#readme)** - see the [LICENSE](https://en.wikipedia.org/wiki/Creative_Commons_license) file for details.
 
 ```
 ```
+
 

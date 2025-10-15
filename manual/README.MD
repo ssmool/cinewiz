@@ -299,7 +299,8 @@ We welcome contributions to **cinewiz**\! If you have suggestions, bug reports, 
 
 ## 📄 License
 
-This project is licensed under the **[CREATIVE COMMONS LICENCSE](https://www.google.com/url?sa=E&source=gmail&q=https://github.com/ssmool/cinewiz/blob/main/LICENSE)** - see the [LICENSE](https://www.google.com/url?sa=E&source=gmail&q=https://github.com/ssmool/cinewiz/blob/main/LICENSE) file for details.
+This project is licensed under the **[CREATIVE COMMONS LICENCSE](https://github.com/ssmool/cinewiz/tree/main?tab=CC0-1.0-1-ov-file#readme)** - see the [LICENSE](https://github.com/ssmool/cinewiz/tree/main?tab=CC0-1.0-1-ov-file#readme) file for details.
 
 ```
 ```
+

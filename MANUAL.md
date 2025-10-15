@@ -1,10 +1,49 @@
+
 ````markdown
-# 🧙‍♂️ cinewiz: GenAI Image Creation in Python
+## 🎬 Cinewiz - Theatre Movie RAG GEN-AI
 
-[![GitHub license](https://img.shields.io/github/license/ssmool/cinewiz?style=for-the-badge)](https://github.com/ssmool/cinewiz/blob/main/LICENSE)
-[![PyPI version](https://img.shields.io/pypi/v/cinewiz?style=for-the-badge)](https://pypi.org/project/cinewiz/)
-[![Python versions](https://img.shields.io/badge/python-3.8%2B-blue?style=for-the-badge)](https://www.python.org/)
+![Python CiNEWIZ_RAG_GENAI Logo](./assets/cinewiz_cover.gif)
 
+**Version:** 1.0 Beta
+
+**Status:** Under Development  
+
+**Author:** #asytrick
+
+**Website:** [github.com/cinewiz](https://github.com/ssmool/cinewiz)  
+
+**Contact:** eusmool@gmail.com  
+
+**Cinewiz** is an open-source Python package designed to streamline the development of **multimodal applications** powered by **LLMs**, **RAG (Retrieval-Augmented Generation)**, and **web crawling**. It’s built for workflows that require dynamic content generation and automation in creative environments.
+
+Use Cinewiz to:
+- Generate **images from keywords** and visual prompts  
+- Compose contextual **text content** using online data  
+- Insert **QR codes** into generated artwork  
+- Manage persistent URI lists for input/output resources  
+- Expand and **globalize prompts** across multiple languages  
+- Integrate easily with generative pipelines and AI toolkits
+
+### 🧙‍♂️ MANUAL: cinewiz: GenAI Image Creation in Python
+
+## 📦 Installation
+
+Install Cinewiz directly from PyPI:
+
+```bash
+pip install cinewiz
+````
+
+> Requirements:
+>
+> * Python 3.7+
+
+```bash
+pip install rembg Pillow
+pip install qrcode Pillow
+pip install selenium webdriver_manager
+pip install transformers
+```
 **cinewiz** is a lightweight and powerful Python library that simplifies the process of generating high-quality AI images using various generative models. It wraps complex API calls into simple, intuitive Python functions, making GenAI image creation accessible for scripts, projects, and rapid prototyping.
 
 ## ✨ Features

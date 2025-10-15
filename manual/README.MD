@@ -225,13 +225,16 @@ MIT License © 2025 [ssmool](https://github.com/ssmool)
 
 **Example: Setting the Environment Variable (Linux/macOS)**
 
+
 ```bash
+#COMMING SOON
 export CINEWIZ_API_KEY="[YOUR_GENERATIVE_AI_API_KEY]"
 ```
 
 **Example: Setting the Environment Variable (Windows)**
 
 ```bash
+#COMMING SOON
 set CINEWIZ_API_KEY="[YOUR_GENERATIVE_AI_API_KEY]"
 ```
 
@@ -303,6 +306,7 @@ This project is licensed under the [CREATIVE COMMONS LICENCSE](https://github.co
 
 ```
 ```
+
 
 
 

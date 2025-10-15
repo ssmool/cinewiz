@@ -2,7 +2,7 @@
 ````markdown
 ## 🎬 Cinewiz - Theatre Movie RAG GEN-AI
 
-![Python CiNEWIZ_RAG_GENAI Logo](./assets/cinewiz_cover.gif)
+![Python CiNEWIZ_RAG_GENAI Logo](assets/cinewiz_cover.gif)
 
 **Version:** 1.0 Beta
 

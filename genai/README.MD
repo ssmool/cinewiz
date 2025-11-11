@@ -13,6 +13,12 @@ It provides methods to generate visual scenes, add text and QR codes, set backgr
 ## 📦 Installation
 
 ```bash
+pip install git+https://github.com/ssmool/cinewiz.git
+```
+
+or
+
+```bash
 git clone https://github.com/ssmool/cinewiz.git
 cd cinewiz/genai
 pip install -r requirements.txt

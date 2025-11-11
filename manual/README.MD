@@ -58,20 +58,14 @@ git clone https://github.com/ssmool/cinewiz.git
 cd cinewiz
 ```
 
-Run the example:
-
-```bash
-python cinewiz.py
-```
-
----
-
 ## 📁 Project Structure
 
 ```
 cinewiz/
 │
 ├── cinewiz.py          # Main script and API
+|── genai/              # GENAI FOR AI CONSTRUCT IMAGES BY SCRIPTS
+|── web/                # CONNECTORS FOR SEARCH ON THE GOOGLE IMAGES AND GIPHY AND FLICKR
 ├── output/             # (Optional) Generated images
 └── README.md           # Documentation
 ```
@@ -306,6 +300,7 @@ This project is licensed under the [CREATIVE COMMONS LICENCSE](https://github.co
 
 ```
 ```
+
 
 
 

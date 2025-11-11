@@ -167,7 +167,7 @@ set_sign("John Doe", "john@example.com")
 ```python
 # Create cinematic storyboard scene
 set_board(800, 600, (240, 240, 240))
-set_background(2, "vintage cinema", "bg.png", "true")
+set_background(2, "vintage cinema", "bg.png", 0)
 actor_img = set_picture("actor_photo.png", 1)
 set_text("scene_1", "A New Beginning", 50, 520, "title",
          (20, 20, 20), "fonts/PlayfairDisplay.woff", 36)

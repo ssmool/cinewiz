@@ -100,10 +100,10 @@ set_init("start_image.png")
 set_board(1024, 768, (255, 255, 255))  # white background
 
 # Add a portrait background (by style/keyword)
-set_background(1, "portrait richard avedon", "file.png", "false")
+set_background(1, "portrait richard avedon", "file.png", 0) # #use 0 - to websearch is not allowed - [1 - when is decrapetd]
 
 # Place a character and remove its background
-actor = set_picture("actor.png", 1)
+actor = set_picture("actor.png", 1) #use 0 - to rembg is not allowed
 
 # Add text overlay
 set_text(

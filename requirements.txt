@@ -1,0 +1,25 @@
+# Core image and background processing
+rembg>=2.0.56
+Pillow>=10.0.0
+
+# Web automation and scraping
+selenium>=4.24.0
+beautifulsoup4>=4.12.3
+requests>=2.32.3
+
+# AI/NLP and vision models
+transformers>=4.45.0
+torch>=2.3.0
+nltk>=3.9
+scikit-image>=0.24.0
+
+# QR code generation
+qrcode[pil]>=7.4.2
+
+# Computer vision and numerical
+opencv-python>=4.10.0.84
+numpy>=1.26.4
+
+# Optional: for certain transformers pipelines (text2img, captioning)
+sentencepiece>=0.2.0
+safetensors>=0.4.4

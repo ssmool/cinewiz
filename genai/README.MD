@@ -35,34 +35,39 @@ from cinewiz.genai import *
 ## 🧩 Basic Usage Example
 
 ```python
-# Initialize configuration
+from cinewiz.genai import *
+# Initialize configuration for first-time setup
 set_start_first_use_config()
 
-# Initialize a starting image
-set_init("start_image.png")
+# Set initial starting image
+set_init('start_image.jpg')
 
-# Create a new board (canvas)
-set_board(1024, 768, (255, 255, 255))  # white background
+# Create a new canvas
+set_board(1024, 720, 'white')  # white background blank
 
-# Set a portrait background
-set_background(1, 'portrait richard avedon', 'file.png', 'false')
+# Add a portrait background (by style/keyword)
+_file = 'card_back.jpg' # use absolute path
+_buff_w = set_background(0, "NIL", _file, 0) # #use 0 - to websearch is not allowed - [1 - when is comming soon]
 
-# Add a picture and remove background
-w = set_picture("actor.png", 1)
+# Place a character and remove its background
+#_logo = set_picture(_fl_b, 1) #use 0 - to rembg is not allowed
+_pw = int(0)
+_ph = int(0)
+_pl = _w - 20
+_pr = _h - 20
+print(f'_pw = (_w/2) = {_pw} ------ _ph = (_h/2) = {_ph} ----------')
+_fl_b = '/home/smoolisky-dotosky/Desktop/_drackos_castle/anarchy.jpg'
+_buff_w = add_picture(_fl_b,0,0,1024,720)
+_gui = 'tCpeqDL/VEmiKvYh68d2Iw=='
 
 # Add text overlay
-set_text("guid_001", "Directed by Richard", 200, 600, (0, 0, 0),
-         "fonts/Montserrat-Regular.woff", 32)
+set_text(_gui,"DRACKOS CASTLE - [VAMPIERES]",30,20,(255, 255, 255),"/home/smoolisky-dotosky/Desktop/_resources/_fonts/Montserrat-Regular.ttf",36)
 
-# Add a QR code linking to your film
-qrcode = set_qrcode("https://filmfest.io/cinewiz")
-add_qrcode(qrcode, 900, 700)
+# Generate and add a QR code
+qr = set_qrcode(f'https://busk.io/{_gui}')
+add_qrcode(qr, 20, 670)
 
-# Optional: Comic-style render
-set_comix("scene_final.png")
-
-# Sign the artwork
-set_sign("John Doe", "john@example.com")
+set_save()
 ```
 
 ---
@@ -97,25 +102,6 @@ set_sign("John Doe", "john@example.com")
 | `set_qrcode(url)`                                                                     | Generates a QR code.                               | URL/text                                           | `_w` (QR image)               |
 | `add_qrcode(_w, pos_x, pos_y)`                                                        | Adds generated QR code to image.                   | QR image, X, Y position                            | None                          |
 | `set_sign(author, email)`                                                             | Adds digital signature metadata.                   | author name, email                                 | None                          |
-
----
-
-## 🧰 Extended Example
-
-```python
-# Build a creative storyboard scene
-set_board(800, 600, (240, 240, 240))
-set_background(2, 'vintage cinema', 'bg.png', 'true')
-actor_img = set_picture('actor_photo.png', 1)
-set_text('scene_1', 'A New Beginning', 50, 520, 'title',
-         (20, 20, 20), 'fonts/PlayfairDisplay.woff', 36)
-comic_style = set_comix(actor_img)
-qr = set_qrcode('https://cinewiz.app/scene/001')
-add_qrcode(qr, 700, 550)
-set_sign('Jane Director', 'jane@cinewiz.app')
-```
-
----
 
 ## 🧾 License
 

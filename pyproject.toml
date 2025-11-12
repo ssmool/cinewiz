@@ -5,18 +5,27 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cinewiz"
 version = "0.1.0"
-description = "Cinewiz — GenAI video toolkit for compositing, background masking, and FX automation."
+description = "🎬 Cinewiz — GenAI video toolkit for compositing, masking, and cinematic FX automation."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
+
 authors = [
-  { name = "ssmool", email = "your-email@example.com" }
+  { name = "ssmool", email = "contact@ssmool.dev" }
 ]
-keywords = ["ai", "video", "fx", "masking", "cinema", "genai", "toolkit"]
+
+keywords = [
+  "genai", "video", "ai", "masking", "fx", "cinema",
+  "computer-vision", "deep-learning", "toolkit"
+]
+
 classifiers = [
+  "Development Status :: 4 - Beta",
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: MIT License",
-  "Operating System :: OS Independent"
+  "Operating System :: OS Independent",
+  "Topic :: Multimedia :: Video",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence"
 ]
 
 dependencies = [
@@ -28,24 +37,60 @@ dependencies = [
   "tqdm"
 ]
 
+[project.optional-dependencies]
+dev = [
+  "black",
+  "flake8",
+  "pytest",
+  "setuptools",
+  "wheel",
+  "twine"
+]
+
+cuda = [
+  "torchvision",
+  "torchaudio",
+  "cupy-cuda12x"
+]
+
+docs = [
+  "mkdocs",
+  "mkdocs-material",
+  "pdoc"
+]
+
+examples = [
+  "matplotlib",
+  "moviepy",
+  "imageio",
+  "notebook"
+]
+
 [project.urls]
 Homepage = "https://github.com/ssmool/cinewiz"
 Repository = "https://github.com/ssmool/cinewiz"
 Issues = "https://github.com/ssmool/cinewiz/issues"
+Documentation = "https://github.com/ssmool/cinewiz/wiki"
+Examples = "https://github.com/ssmool/cinewiz/tree/main/examples"
 
 [tool.setuptools]
-# include both source and examples
-packages = ["cinewiz", "cinewiz.genai"]
 include-package-data = true
-
-[tool.setuptools.package-data]
-# include all files under examples directory
-"cinewiz" = ["../examples/**/*"]
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["cinewiz", "cinewiz.*"]
 
+[tool.setuptools.package-data]
+"cinewiz" = ["../examples/**/*"]
+
 [tool.cinewiz]
-example_dir = "examples"
 module_dir = "cinewiz/genai"
+example_dir = "examples"
+
+[tool.black]
+line-length = 88
+target-version = ["py39", "py310", "py311"]
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]

@@ -9,16 +9,10 @@
 Install from PyPI:
 
 ```bash
-pip install cinewiz
-````
-
-Or clone from GitHub:
-
-```bash
 git clone https://github.com/ssmool/cinewiz.git
-cd cinewiz
-```
-
+cd cinewiz/
+mkdir _out
+````
 ---
 
 ## ▶️ Run Example

@@ -162,23 +162,6 @@ set_sign("John Doe", "john@example.com")
 
 ---
 
-## 🎨 Extended Example
-
-```python
-# Create cinematic storyboard scene
-set_board(800, 600, (240, 240, 240))
-set_background(2, "vintage cinema", "bg.png", 0)
-actor_img = set_picture("actor_photo.png", 1)
-set_text("scene_1", "A New Beginning", 50, 520, "title",
-         (20, 20, 20), "fonts/PlayfairDisplay.woff", 36)
-comic_style = set_comix(actor_img)
-qr = set_qrcode("https://cinewiz.app/scene/001")
-add_qrcode(qr, 700, 550)
-set_sign("Jane Director", "jane@cinewiz.app")
-```
-
----
-
 ## 🔁 Usage Flow Diagram
 
 ```text

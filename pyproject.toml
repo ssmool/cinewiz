@@ -1,66 +1,26 @@
-[build-system]
-requires = ["setuptools>=68.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[project]
-name = "cinewiz"
-version = "1.0"
-description = "🎬 Cinewiz — GenAI video toolkit for compositing, masking, and cinematic FX automation."
-readme = "README.md"
-requires-python = ">=3.0"
-license = { text = "MIT" }
-
-authors = [
-  { name = "#asytrick", email = "eusmool@gmail.com" }
-]
-
-keywords = [
-  "genai", "images", "ai", "video", "gimp-plugin", "fx", "cinema",
-  "computer-vision", "yolo", "toolkit", "genai", "prompt llms", "editor", "automatic images", "python"
-]
-
-classifiers = [
-  "Development Status :: 4 - Beta",
-  "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
-  "Operating System :: OS Independent",
-  "Topic :: Multimedia :: Video",
-  "Topic :: Scientific/Engineering :: Artificial Intelligence"
-]
-
-dependencies = [
-  "opencv-python",
-  "numpy",
-  "torch",
-  "transformers",
-  "pillow",
-  "tqdm"
-]
-
-[project.urls]
-Homepage = "https://github.com/ssmool/cinewiz"
-Repository = "https://github.com/ssmool/cinewiz"
-Documentation = "https://github.com/ssmool/cinewiz/manual"
-Examples = "https://github.com/ssmool/cinewiz/examples"
-
-[tool.setuptools]
-include-package-data = true
-
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["cinewiz", "cinewiz.*"]
-
-[tool.setuptools.package-data]
-"cinewiz" = ["examples/**/*"]
-
-[tool.cinewiz]
-module_dir = "genai"
-example_dir = "examples"
-
-[tool.black]
-line-length = 88
-target-version = ["py39", "py310", "py311"]
-
-[tool.flake8]
-max-line-length = 88
-extend-ignore = ["E203", "W503"]
+[metadata]
+name = CINEWIZ
+version = 2.0.1
+author = #ASYTRICK
+author_email = eusmool@gmail.com
+description = **Cinewiz** is an open-source Python package designed to streamline the development of **multimodal applications** powered by **LLMs**, **RAG (Retrieval-Augmented Generation)**, and **web crawling**. It’s built for workflows that require dynamic content generation and automation in creative environments.
+long_description = file: README.md
+long_description_content_type = text/markdown
+url = https://github.com/ssmool/cinewiz
+classifiers =
+    Programming Language :: Python :: 3
+    Operating System :: OS Independent
+    Development Status :: 4 - Beta
+[options]
+packages = find:
+python_requires = >=3.7
+install_requires=
+	rembg
+	Pillow
+	qrcode
+	selenium
+	webdriver_manager
+	transformers
+	opencv-python
+	numpy
+	scikit-image

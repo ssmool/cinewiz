@@ -4,15 +4,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cinewiz"
-version = "1.0.0"
-description = "CineWiz — GenAI Creative Image/Text Toolkit for visual storytelling and compositing."
+version = "0.1.0"
+description = "Cinewiz — GenAI video toolkit for compositing, background masking, and FX automation."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [
-  { name = "ssmool", email = "contact@ssmool.dev" }
+  { name = "ssmool", email = "your-email@example.com" }
 ]
-keywords = ["AI", "image", "text", "storyboard", "cinema", "generator", "art"]
+keywords = ["ai", "video", "fx", "masking", "cinema", "genai", "toolkit"]
 classifiers = [
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: MIT License",
@@ -20,22 +20,32 @@ classifiers = [
 ]
 
 dependencies = [
-  "rembg>=2.0.56",
-  "Pillow>=10.0.0",
-  "selenium>=4.24.0",
-  "beautifulsoup4>=4.12.3",
-  "requests>=2.32.3",
-  "transformers>=4.45.0",
-  "torch>=2.3.0",
-  "nltk>=3.9",
-  "scikit-image>=0.24.0",
-  "qrcode[pil]>=7.4.2",
-  "opencv-python>=4.10.0.84",
-  "numpy>=1.26.4",
-  "sentencepiece>=0.2.0",
-  "safetensors>=0.4.4"
+  "opencv-python",
+  "numpy",
+  "torch",
+  "transformers",
+  "pillow",
+  "tqdm"
 ]
 
 [project.urls]
 Homepage = "https://github.com/ssmool/cinewiz"
+Repository = "https://github.com/ssmool/cinewiz"
 Issues = "https://github.com/ssmool/cinewiz/issues"
+
+[tool.setuptools]
+# include both source and examples
+packages = ["cinewiz", "cinewiz.genai"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+# include all files under examples directory
+"cinewiz" = ["../examples/**/*"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cinewiz", "cinewiz.*"]
+
+[tool.cinewiz]
+example_dir = "examples"
+module_dir = "cinewiz/genai"

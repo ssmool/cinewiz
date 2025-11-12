@@ -51,9 +51,12 @@ def set_start_first_use_config():
 
 def set_init(_buff_glob_file):
     global _buff_tmp
-    _buff_tmp = f'{_app_path}/_out/{_buff_glob_file}'
+    _rfind = _buff_glob_file.rfind('.')
+    _ext = _buff_glob_file[_rfind:(len(_buff_glob_file))]
+    _named = str(uuid.uuid4()).replace('-','_')
+    _buff_tmp = f'{_app_path}/_out/{_named}{_ext}'
     print(f'---------------------{_buff_tmp}----------------------')
-    _w = Image.open(_buff_tmp)
+    _w = Image.open(_buff_glob_file)
     if _w.mode == "P":
         _w = _buff.convert("RGB")
     _w.save(_buff_tmp)
@@ -68,11 +71,12 @@ def add_read_lib_inri_uri(_buff_uri):
 def add_read_lib(_buff_uri):
     _buff_glob_lib += _buff_uri
 
-def set_picture(image_file,_flag_rmbg):
+def set_picture(image_file,_flag_rmbg, _y, _x):
     _buff = Image.open(image_file)
     if(_flag_rmbg == 1):
-        _buff_rembg = set_picture_remove_bg(_buff)
-        _buff.paste(_buff_rembg, (0,0))
+        #_buff_rembg = set_picture_remove_bg(_buff)
+        _pox = (_y,_x)
+        _buff.paste(_buff_tmp, _pox)
         print(f'=--------------{_buff_tmp}----------------------')
         if _buff.mode == "P":
             _buff = _buff.convert("RGB")
@@ -88,20 +92,25 @@ def set_picture(image_file,_flag_rmbg):
 #    _buff_glob_rag_coll_arr.append(_buf_glob_rag_coll_x)
     return _buff_tmp
 
-def resize_picture(_buff_img,_width,_height):
+def resize_picture(_buff_img,_wh):
     print(f'resize:----------------{_buff_img}---------------------')
     _w = Image.open(_buff_img)
-    _w.resize((_width, _height))
-    if _w.mode == "P":
-         _w = _w.convert("RGB")
-    _w.save(_buff_img)
-    return _buff_img
+    print(f'resize:----------------{_wh}---------------------')
+    _w_n = _w.resize(_wh)
+    _gui = str(uuid.uuid4()).replace('-','_')
+    _rfind = (_buff_img.rfind('.') -1)
+    _rlen = len(_buff_img)
+    _rpt = _buff_img[0:_rfind]
+    _rfind += 1
+    _ext = _buff_img[_rfind:_rlen]
+    _buff_img_pt = f'{_rpt}_{_gui}{_ext}'
+    _w_n.save(_buff_img_pt)
+    return _buff_img_pt
 
-def add_picture(_buff_img,_x,_y,_width,_height):
+def add_picture(_buff_img,_x,_y):
     print(f'-----------------------{_buff_img}----------------------')
     _w = Image.open(_buff_tmp)
-    _w_fl = resize_picture(_buff_img,_width,_height)
-    _w_xp = Image.open(_w_fl)
+    _w_xp = Image.open(_buff_img)
     if _w_xp.mode == "P":
         _w = _w.convert("RGB")
     if _w.mode == "P":
@@ -124,7 +133,7 @@ def set_board(siz_x,siz_y,color_rgb):
     _w.save(_buff_tmp)
     return _w
     
-def set_text(file_name,txt,pos_x,pos_y, text_color_rgb, _c_att_font_ttf, _c_att_font_ttf_size):
+def set_text(multiline,file_name,txt,pos_x,pos_y, text_color_rgb, _c_att_font_ttf, _c_att_font_ttf_size):
     _w = Image.open(_buff_tmp)
     _c_w = ImageDraw.Draw(_w)
     try:
@@ -134,7 +143,10 @@ def set_text(file_name,txt,pos_x,pos_y, text_color_rgb, _c_att_font_ttf, _c_att_
     _c_txt = str(txt)
     _c_pos = (pos_x, pos_y)
     _c_font = ImageFont.truetype(_c_att_font_ttf, _c_att_font_ttf_size)
-    _c_w.text(_c_pos, _c_txt, font=c_font, fill=text_color_rgb)
+    if multiline == 0:
+        _c_w.text(_c_pos, _c_txt, font=c_font, fill=text_color_rgb)
+    else:
+        _c_w.multiline_text(_c_pos, _c_txt, fill=text_color_rgb, font=c_font,spacing=10)        
     if _w.mode == "P":
         _w = _w.convert("RGB")
     _w.save(_buff_tmp)
@@ -331,6 +343,7 @@ def set_save():
     _w = Image.open(_buff_tmp)
     if _w.mode == "P":
         _w = _w.convert("RGB")
+    _w.show()
     _w = _w.save(_buff_tmp)
     #_w.show()
     print(f'--------------saved:{_buff_tmp}------------------')

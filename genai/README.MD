@@ -13,7 +13,7 @@ It provides methods to generate visual scenes, add text and QR codes, set backgr
 ## 📦 Installation
 
 ```bash
-pip install git+https://github.com/ssmool/cinewiz.git
+pip install cinewiz
 ```
 
 or
@@ -28,6 +28,7 @@ Then import in your Python script:
 
 ```python
 from cinewiz.genai import *
+from cinewiz.web import *
 ```
 
 ---
@@ -46,25 +47,29 @@ set_init('start_image.jpg')
 set_board(1024, 720, 'white')  # white background blank
 
 # Add a portrait background (by style/keyword)
-_file = 'card_back.jpg' # use absolute path
-_buff_w = set_background(0, "NIL", _file, 0) # #use 0 - to websearch is not allowed - [1 - when is comming soon]
+_buff_w = set_background(0, "NIL", 'image.png', 0) # #use 0 - to websearch is not allowed - [1 - when is comming soon]
+
+# If you will can resize image
+_postal = resize_picture('thumbnail.png',(240, 240))
 
 # Place a character and remove its background
-#_logo = set_picture(_fl_b, 1) #use 0 - to rembg is not allowed
-_pw = int(0)
-_ph = int(0)
-_pl = _w - 20
-_pr = _h - 20
-print(f'_pw = (_w/2) = {_pw} ------ _ph = (_h/2) = {_ph} ----------')
-_fl_b = '/home/smoolisky-dotosky/Desktop/_drackos_castle/anarchy.jpg'
-_buff_w = add_picture(_fl_b,0,0,1024,720)
+_logo =  add_picture(_postal,50,50)
+
 _gui = 'tCpeqDL/VEmiKvYh68d2Iw=='
 
 # Add text overlay
-set_text(_gui,"DRACKOS CASTLE - [VAMPIERES]",30,20,(255, 255, 255),"/home/smoolisky-dotosky/Desktop/_resources/_fonts/Montserrat-Regular.ttf",36)
+_text= """CINEWIZ AI: IMAGES GENAI
+MADED AND UNDERCONSTRUCTION FOR DEPLOY
+AUTOMATIC IMAGES BY LLMS AND COMIX,
+JORNALS, PAPERS AND BOOKS OR E-BOOK
+BY:#ASYTRICK
+CONTACT:eusmool@gmail.com
+FIRST DEPLOY:12 NOV 2025
+"""
+set_text(1,_gui,_text,30,20,(255, 255, 255),"/home/smoolisky-dotosky/Desktop/_resources/_fonts/Montserrat-Regular.ttf",26)
 
 # Generate and add a QR code
-qr = set_qrcode(f'https://busk.io/{_gui}')
+qr = set_qrcode(f'https://github.com/ssmool/cinewiz')
 add_qrcode(qr, 20, 670)
 
 set_save()

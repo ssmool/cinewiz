@@ -87,48 +87,6 @@ from cinewiz.genai import *
 
 ---
 
-## 🧠 Quick Start Example
-
-```python
-# Initialize configuration for first-time setup
-set_start_first_use_config()
-
-# Set initial starting image
-set_init("start_image.png")
-
-# Create a new canvas
-set_board(1024, 768, (255, 255, 255))  # white background
-
-# Add a portrait background (by style/keyword)
-set_background(1, "portrait richard avedon", "file.png", 0) # #use 0 - to websearch is not allowed - [1 - when is decrapetd]
-
-# Place a character and remove its background
-actor = set_picture("actor.png", 1) #use 0 - to rembg is not allowed
-
-# Add text overlay
-set_text(
-    "guid_001",
-    "Directed by Richard",
-    200,
-    600,
-    (0, 0, 0),
-    "fonts/Montserrat-Regular.woff",
-    32
-)
-
-# Generate and add a QR code
-qr = set_qrcode("https://filmfest.io/cinewiz")
-add_qrcode(qr, 900, 700)
-
-# Optional: Apply comic-book filter
-set_comix("scene_final.png")
-
-# Sign your work
-set_sign("John Doe", "john@example.com")
-```
-
----
-
 ## ⚙️ Function Reference
 
 | **Function**                                                          | **Description**                                  | **Parameters**                         | **Returns**          |

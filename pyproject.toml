@@ -4,19 +4,19 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cinewiz"
-version = "0.1.0"
+version = "1.0"
 description = "🎬 Cinewiz — GenAI video toolkit for compositing, masking, and cinematic FX automation."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.0"
 license = { text = "MIT" }
 
 authors = [
-  { name = "ssmool", email = "contact@ssmool.dev" }
+  { name = "#asytrick", email = "eusmool@gmail.com" }
 ]
 
 keywords = [
-  "genai", "video", "ai", "masking", "fx", "cinema",
-  "computer-vision", "deep-learning", "toolkit"
+  "genai", "images", "ai", "video", "gimp-plugin", "fx", "cinema",
+  "computer-vision", "yolo", "toolkit", "genai", "prompt llms", "editor", "automatic images", "python"
 ]
 
 classifiers = [
@@ -37,41 +37,11 @@ dependencies = [
   "tqdm"
 ]
 
-[project.optional-dependencies]
-dev = [
-  "black",
-  "flake8",
-  "pytest",
-  "setuptools",
-  "wheel",
-  "twine"
-]
-
-cuda = [
-  "torchvision",
-  "torchaudio",
-  "cupy-cuda12x"
-]
-
-docs = [
-  "mkdocs",
-  "mkdocs-material",
-  "pdoc"
-]
-
-examples = [
-  "matplotlib",
-  "moviepy",
-  "imageio",
-  "notebook"
-]
-
 [project.urls]
 Homepage = "https://github.com/ssmool/cinewiz"
 Repository = "https://github.com/ssmool/cinewiz"
-Issues = "https://github.com/ssmool/cinewiz/issues"
-Documentation = "https://github.com/ssmool/cinewiz/wiki"
-Examples = "https://github.com/ssmool/cinewiz/tree/main/examples"
+Documentation = "https://github.com/ssmool/cinewiz/manual"
+Examples = "https://github.com/ssmool/cinewiz/examples"
 
 [tool.setuptools]
 include-package-data = true
@@ -81,10 +51,10 @@ where = ["."]
 include = ["cinewiz", "cinewiz.*"]
 
 [tool.setuptools.package-data]
-"cinewiz" = ["../examples/**/*"]
+"cinewiz" = ["examples/**/*"]
 
 [tool.cinewiz]
-module_dir = "cinewiz/genai"
+module_dir = "genai"
 example_dir = "examples"
 
 [tool.black]

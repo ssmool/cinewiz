@@ -31,12 +31,6 @@ Install Cinewiz directly from PyPI:
 pip install git+https://github.com/ssmool/cinewiz.git
 ````
 
-From pypi.org:
-
-```bash
-pip install cinewiz
-```
-
 > Requirements:
 >
 > * Python 3.7+

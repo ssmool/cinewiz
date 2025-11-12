@@ -75,7 +75,13 @@ It allows you to generate AI-driven visual scenes, overlay text, add QR codes, a
 
 ```bash
 git clone https://github.com/ssmool/cinewiz.git
+````
+
+```bash
 cd cinewiz/genai
+````
+
+```bash
 pip install -r requirements.txt
 ````
 

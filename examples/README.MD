@@ -25,6 +25,8 @@ python postmail.py
 
 When finished, the result is automatically shown on screen. ✨
 
+![postcar](./_out/7d90fbe0_c8a1_4bfb_b944_18c897d9420d.jpg)
+
 ---
 
 ## 🧩 Import Example

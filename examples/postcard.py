@@ -6,15 +6,27 @@ import os
 import uuid
 import io
 import time
-import shutil
 import re
 from urllib.parse import quote
-from concurrent.futures import ThreadPoolExecutor
 
 # ==================== CONFIGURATION ====================
 _app_path = os.getcwd()
 _output_dir = f'{_app_path}/_out'
+_fonts_dir = f'{_app_path}/_lib/_fonts'
 os.makedirs(_output_dir, exist_ok=True)
+os.makedirs(_fonts_dir, exist_ok=True)
+
+# Create a default font file if needed
+_default_font_path = None
+for font_path in [
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "/System/Library/Fonts/Helvetica.ttc",
+    "C:\\Windows\\Fonts\\Arial.ttf",
+    f'{_fonts_dir}/Montserrat-Regular.ttf'
+]:
+    if os.path.exists(font_path):
+        _default_font_path = font_path
+        break
 
 # ==================== IMAGE COMPOSER CLASS ====================
 class ImageComposer:
@@ -31,16 +43,12 @@ class ImageComposer:
     
     def add_image(self, image_path, position=(0, 0), size=None, remove_bg=False):
         """Add an image to the composition"""
+        position=(0,0)
         try:
             img = Image.open(image_path)
             
-            # Remove background if requested
-            try:
-                if(image_path.index('background') < 1):
-                  if remove_bg:
-                      print(f"REMOVE BG({image_path}):")
-                      img = self.remove_background(img)
-            except:
+            # Remove background if requested (skip for background images)
+            if remove_bg and 'background' not in image_path.lower():
                 print(f"REMOVE BG({image_path}):")
                 img = self.remove_background(img)
             
@@ -77,27 +85,46 @@ class ImageComposer:
             print(f"Error removing background: {e}")
             return image
     
-    def add_text(self, text, position=(10, 10), font_size=20, color=(0, 0, 0)):
-        """Add text to the composition"""
+    def add_text(self, text, position=(10, 10), font_size=20, color=(0, 0, 0), font_path=None, multiline=False):
+        """Add text to the composition with optional multiline support"""
         draw = ImageDraw.Draw(self.canvas)
+        
+        # Split text into lines for multiline
+        if multiline and '\n' not in text:
+            # Auto-wrap text at 50 characters
+            words = text.split()
+            lines = []
+            current_line = []
+            current_length = 0
+            
+            for word in words:
+                if current_length + len(word) + 1 <= 50:
+                    current_line.append(word)
+                    current_length += len(word) + 1
+                else:
+                    if current_line:
+                        lines.append(' '.join(current_line))
+                    current_line = [word]
+                    current_length = len(word)
+            if current_line:
+                lines.append(' '.join(current_line))
+            text = '\n'.join(lines)
+        
         try:
-            # Try to use a system font (Linux/Mac)
-            font_paths = [
-                "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-                "/System/Library/Fonts/Helvetica.ttc",
-                "C:\\Windows\\Fonts\\Arial.ttf"
-            ]
-            font = None
-            for font_path in font_paths:
-                if os.path.exists(font_path):
-                    font = ImageFont.truetype(font_path, font_size)
-                    break
-            if font is None:
+            # Try to use specified font or default
+            if font_path and os.path.exists(font_path):
+                font = ImageFont.truetype(font_path, font_size)
+            elif _default_font_path:
+                font = ImageFont.truetype(_default_font_path, font_size)
+            else:
                 font = ImageFont.load_default()
         except:
             font = ImageFont.load_default()
         
-        draw.text(position, text, fill=color, font=font)
+        if multiline:
+            draw.multiline_text(position, text, fill=color, font=font)
+        else:
+            draw.text(position, text, fill=color, font=font)
     
     def save_composition(self, filename="composition.png"):
         """Save the final composition"""
@@ -106,7 +133,7 @@ class ImageComposer:
         print(f"Composition saved: {output_path}")
         return output_path
 
-# ==================== BING IMAGE SCRAPER (No imghdr dependency) ====================
+# ==================== BING IMAGE SCRAPER ====================
 class BingImageScraper:
     def __init__(self):
         self.headers = {
@@ -139,14 +166,9 @@ class BingImageScraper:
                 if src and src.startswith('http'):
                     image_urls.append(src)
             
-            # Method 4: Extract from thumbnail URLs
-            thumb_matches = re.findall(r'turl&quot;:&quot;([^&]+)&quot;', response.text)
-            image_urls.extend(thumb_matches)
-            
             # Clean and deduplicate URLs
             clean_urls = []
             for url in image_urls:
-                # Clean up escaped characters
                 url = url.replace('\\u002f', '/').replace('\\/', '/')
                 if url.startswith('http') and 'bing.com' not in url:
                     clean_urls.append(url)
@@ -169,7 +191,7 @@ class BingImageScraper:
             response = requests.get(url, timeout=10, headers=self.headers)
             response.raise_for_status()
             
-            # Determine file extension from content-type or URL
+            # Determine file extension from content-type
             content_type = response.headers.get('content-type', '')
             if 'jpeg' in content_type or 'jpg' in content_type:
                 ext = '.jpg'
@@ -178,7 +200,7 @@ class BingImageScraper:
             elif 'gif' in content_type:
                 ext = '.gif'
             else:
-                ext = '.jpg'  # Default to jpg
+                ext = '.jpg'
             
             filename = f"{keyword}_{uuid.uuid4().hex[:8]}{ext}"
             filepath = f'{_output_dir}/{filename}'
@@ -188,67 +210,101 @@ class BingImageScraper:
             
             return filepath
         except Exception as e:
-            print(f"Error downloading image from {url}: {e}")
+            print(f"Error downloading image: {e}")
             return None
+
+# ==================== PARSE PROMPT FUNCTION ====================
+def parse_prompt(search_query):
+    """
+    Parse the prompt to separate text in quotes (which won't be searched)
+    from image keywords (which will be searched)
+    """
+    image_keywords = []
+    text_entries = []
+    
+    i = 0
+    length = len(search_query)
+    
+    while i < length:
+        if search_query[i] == '"':
+            # Found opening quote
+            i += 1
+            start = i
+            # Find closing quote
+            while i < length and search_query[i] != '"':
+                i += 1
+            text_content = search_query[start:i]
+            if text_content:
+                text_entries.append(text_content)
+            i += 1
+        elif search_query[i].strip():  # Non-space character
+            # Extract keyword
+            start = i
+            while i < length and search_query[i] != ' ':
+                i += 1
+            keyword = search_query[start:i].strip()
+            if keyword and keyword != '"':
+                image_keywords.append(keyword)
+        else:
+            i += 1
+    
+    return image_keywords, text_entries
 
 # ==================== MAIN FUNCTION ====================
 def main():
     print("=" * 60)
-    print("CINEWIZ GENAI FOR GENEARATE IMAGES FROM PROMPT:")
+    print("CINEWIZ GENAI - Generate Images from Prompt")
+    print("=" * 60)
+    print("\nInstructions:")
+    print("- Enter words without quotes to search and download images")
+    print("- Enter text inside \"quotes\" to add as text overlay (not searched)")
+    print("- Example: cat dog \"Hello World\" bird")
     print("=" * 60)
     
     # Get search query from user
-    search_query = input("\nEnter search terms (separate by spaces): ").strip()
+    search_query = input("\nEnter prompt: ").strip()
     if not search_query:
-        print("Error: No search terms entered!")
+        print("Error: No prompt entered!")
         return
     
-    # Split into individual words
-    _text_list = []
-    _add_text = False
-    _temp = ''
-    for _word in search_query:
-        if(_word == '"' and _add_text == True):
-            _add_text = False
-            _text_list.append(_temp)
-            continue
-        if(_word == '"' and _add_text == False):
-            _temp + _word
-            add_text = True
-            continue
-    keywords = search_query.split()
-    print(f"\nSearching for: {', '.join(keywords)}")
+    # Parse the prompt to separate image keywords and text
+    image_keywords, text_entries = parse_prompt(search_query)
+    
+    print(f"\n📷 Image keywords to search: {image_keywords if image_keywords else 'None'}")
+    print(f"📝 Text overlays to add: {text_entries if text_entries else 'None'}")
+    
+    if not image_keywords:
+        print("\nWarning: No image keywords found! Only text will be added.")
     
     # Initialize components
     scraper = BingImageScraper()
     composer = ImageComposer(width=1920, height=1080)
-    composer.create_canvas(color=(255, 255, 255))
+    composer.create_canvas(color=(240, 240, 240))
     
     # Layout positions for images (grid of 3x3)
     positions = [
-        (0, 0), (640, 0), (1280, 0),
-        (0, 360), (640, 360), (1280, 360),
-        (0, 720), (640, 720), (1280, 720)
+        (50, 100), (690, 100), (1330, 100),
+        (50, 460), (690, 460), (1330, 460),
+        (50, 820), (690, 820), (1330, 820)
     ]
-    image_size = (600, 600)
+    image_size = (580, 320)
     
     downloaded_images = []
     
-    # Search and download ONE image for each keyword
-    for idx, keyword in enumerate(keywords[:9]):  # Max 9 images for 3x3 grid
-        print(f"\n--- Searching for: {keyword} ---")
+    # Search and download images for each keyword
+    for idx, keyword in enumerate(image_keywords[:9]):  # Max 9 images
+        print(f"\n🔍 Searching for: {keyword}")
         
-        # Search for images
-        image_urls = scraper.search_images(keyword, limit=3)
+        image_urls = scraper.search_images(keyword, limit=2)
         
         if not image_urls:
-            print(f"No images found for '{keyword}'")
+            print(f"❌ No images found for '{keyword}'")
             continue
         
         # Try to download an image
         image_path = None
         for url in image_urls:
-            print(f"Attempting to download: {url[:80]}...")
+            print(f"📥 Attempting to download: {url[:60]}...")
             image_path = scraper.download_image(url, keyword)
             if image_path:
                 break
@@ -259,34 +315,39 @@ def main():
                 'keyword': keyword,
                 'remove_bg': True
             })
-            print(f"✓ Downloaded: {os.path.basename(image_path)}")
+            print(f"✅ Downloaded: {os.path.basename(image_path)}")
         else:
-            print(f"✗ Failed to download image for '{keyword}'")
+            print(f"❌ Failed to download image for '{keyword}'")
         
-        # Small delay to avoid rate limiting
-        time.sleep(1)
+        time.sleep(0.5)  # Small delay to avoid rate limiting
     
-    # Check if we have any images
-    if not downloaded_images:
-        print("\nNo images were downloaded. Please check your internet connection.")
-        return
-    
-    # Add title text to composition
+    # Add title text
+    title = "CINEWIZ IMAGE COMPOSITION"
     composer.add_text(
-        f"Search Results: {search_query}", 
-        position=(50, 50), 
-        font_size=40, 
+        title,
+        position=(composer.width // 2 - 200, 20),
+        font_size=36,
         color=(0, 0, 0)
     )
     
+    # Add subtitle with search info
+    if image_keywords:
+        subtitle = f"Images: {' | '.join(image_keywords[:5])}"
+        composer.add_text(
+            subtitle,
+            position=(50, 65),
+            font_size=18,
+            color=(100, 100, 100)
+        )
+    
     # Add all images to composition
-    print("\n--- Composing Images ---")
+    print("\n🎨 Composing Images...")
     for i, img_info in enumerate(downloaded_images):
         if i >= len(positions):
             break
             
-        pos = positions[0]
-        print(f"Adding image {i+1}: {img_info['keyword']} at position {pos}")
+        pos = positions[i]
+        print(f"  Adding image {i+1}: {img_info['keyword']} at position {pos}")
         
         # Add image with background removal
         composer.add_image(
@@ -296,44 +357,67 @@ def main():
             remove_bg=img_info['remove_bg']
         )
         
-        # Add label for the keyword
-        label_pos = (pos[0] + 10, pos[1] + image_size[1] + 10)
+        # Add label for the keyword below the image
+        label_pos = (pos[0] + 10, pos[1] + image_size[1] + 5)
         composer.add_text(
-            img_info['keyword'], 
-            position=label_pos, 
-            font_size=24, 
-            color=(100, 100, 100)
+            f"📷 {img_info['keyword']}",
+            position=label_pos,
+            font_size=16,
+            color=(80, 80, 80)
         )
     
-    # Add footer with timestamp
+    # Add text overlays from quotes
+    print("\n📝 Adding text overlays...")
+    text_y_position = 100 if downloaded_images else 100
+    text_x_position = 50
+    
+    for i, text_content in enumerate(text_entries):
+        print(f"  Adding text: '{text_content}'")
+        
+        # Calculate position for each text (stack vertically if multiple)
+        y_offset = text_y_position + (i * 80)
+        
+        # Add decorative background for text
+        composer.add_text(
+            f"「 {text_content} 」",
+            position=(text_x_position + 5, y_offset + 5),
+            font_size=48,
+            color=(200, 200, 200),
+            multiline=False
+        )
+        
+        # Add main text
+        composer.add_text(
+            f"「 {text_content} 」",
+            position=(text_x_position, y_offset),
+            font_size=48,
+            color=(50, 50, 150),
+            multiline=False
+        )
+    
+    # Add footer with timestamp and info
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    footer_text = f"Generated by CINEWIZ | {timestamp} | Images: {len(downloaded_images)} | Texts: {len(text_entries)}"
     composer.add_text(
-        f"Generated with CINEWIZ: {timestamp}", 
-        position=(50, composer.height - 50), 
-        font_size=16, 
+        footer_text,
+        position=(50, composer.height - 40),
+        font_size=14,
         color=(150, 150, 150)
     )
     
-    for _text in _text_list:
-        _gui = 'tCpeqDL/VEmiKvYh68d2Iw=='
-        #set multiline text
-        print(f'addint text:{_text}')
-        # Add text overlay
-        set_text(1,_gui,_text,20,20,(0, 0, 0),f'{path_local}/_lib/_fonts/Montserrat-Regular.ttf',22)
-    
     # Save the final composition
-    output_filename = f"bing_composition_{uuid.uuid4().hex[:8]}.png"
+    output_filename = f"cinewiz_composition_{uuid.uuid4().hex[:8]}.png"
     output_path = composer.save_composition(output_filename)
     
     # Try to display the image
     try:
         composer.canvas.show()
-        print("Image displayed on screen.")
+        print("\n🖼️ Image displayed on screen.")
     except Exception as e:
-        print(f"Could not display image automatically: {e}")
+        print(f"\n⚠️ Could not display image automatically: {e}")
     
     # Cleanup
-    print("\n--- Cleanup ---")
+    print("\n🧹 Cleanup:")
     keep_images = input("Keep downloaded images? (y/n): ").strip().lower()
     
     if keep_images != 'y':
@@ -341,14 +425,14 @@ def main():
             try:
                 if os.path.exists(img_info['path']):
                     os.remove(img_info['path'])
-                    print(f"Removed: {os.path.basename(img_info['path'])}")
+                    print(f"  Removed: {os.path.basename(img_info['path'])}")
             except Exception as e:
-                print(f"Could not remove {img_info['path']}: {e}")
+                print(f"  Could not remove {img_info['path']}: {e}")
     else:
-        print(f"Downloaded images saved in: {_output_dir}")
+        print(f"  Downloaded images saved in: {_output_dir}")
     
-    print(f"\n✓ Process completed successfully!")
-    print(f"Final composition saved at: {output_path}")
+    print(f"\n✅ Process completed successfully!")
+    print(f"📁 Final composition saved at: {output_path}")
 
 # ==================== ENTRY POINT ====================
 if __name__ == "__main__":
@@ -362,7 +446,7 @@ if __name__ == "__main__":
         missing_libs.append("rembg")
     
     try:
-        from PIL import Image
+        from PIL import Image, ImageDraw, ImageFont
         print("✓ Pillow found")
     except ImportError:
         missing_libs.append("pillow")

@@ -2,7 +2,7 @@
 
 ![Python CiNEWIZ_RAG_GENAI Logo](./assets/cinewiz_cover.gif)
 
-**Version:** 1.0 Beta
+**Version:** 2.0 Beta
 
 **Status:** Under Development  
 
@@ -23,178 +23,242 @@ Use Cinewiz to:
 - Integrate easily with generative pipelines and AI toolkits
 
 
-## 📦 Installation
+Based on your GitHub repository, I've created a comprehensive `README.md` for `cinewiz.py`. This README highlights the creative image generation features from your code, focusing on the Bing search, background removal, and text composition capabilities.
 
-Install Cinewiz directly from PyPI:
+```markdown
+# 🎬 CineWiz - AI Image Composer & Text Generator
 
-```bash
-pip install cinewiz
-````
+[![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)](https://python.org)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![PyPI Version](https://img.shields.io/badge/pypi-v1.0-blue.svg)](https://pypi.org/project/cinewiz/)
 
-> Requirements:
->
-> * Python 3.7+
+**CineWiz** is an open-source Python toolkit for creative image composition, AI-powered visual storytelling, and multimodal content generation. It combines Bing image search, automatic background removal, text overlays, and QR code embedding into a single pipeline.
 
-## 🚀 Features
+## ✨ Key Features
 
-* 🎨 Generate **images from prompt keywords**
-* 🧠 Integrate with **RAG pipelines** and context databases
-* 🌍 Support for **text globalization** and multilingual prompts
-* 🔍 Web crawling for content gathering and inspiration
-* 🧾 Auto-generate **text compositions** with contextual relevance
-* 🖼️ Embed **QR codes** directly into your creative artwork
-* 🌐 Configure **URI lists** for persistent generative pipelines
-* 💡 Trigger everything from a **single keyword command**
+- 🔍 **Bing Image Search** – Search and download images by keywords (no API key required)
+- 🖼️ **Automatic Background Removal** – Uses `rembg` AI to remove backgrounds from any image
+- 📝 **Smart Text Parsing** – Separate image keywords from text overlays using quotes
+- 🎨 **Grid Composition** – Automatically arranges images in a 3x3 grid layout
+- 📊 **Multi-language Support** – Globalize prompts across different languages
+- 🔗 **QR Code Integration** – Embed QR codes into your compositions
+- 🧠 **RAG Ready** – Designed to work with Retrieval-Augmented Generation pipelines
 
+## 🚀 Quick Start
 
-## 📘 Usage Example
-
-CineWiz release a first manual instructions version for RAG Enginering on the [CINEWIZ - USER MANUAL FOR COMMAND LINE WITH PYTHON 3+](./genai/README.MD) for completed and first underconstruction version by several pourposes to LLMs and RAG with GEN-AI capabilities with the intuitive command line python use definition by #asytrick
-
-Perfect ✅ — here’s a **GitHub-ready, fully formatted `README.md`** for your `cinewiz` project with:
-
-* Markdown-enhanced sections
-* Syntax-highlighted code blocks
-* A function reference table
-* A usage flow diagram (ASCII format)
-
-You can copy-paste this directly into your repository at
-`cinewiz/README.md`.
-
----
-
-````markdown
-# 🎬 CineWiz — GenAI Creative Image/Text Toolkit
-
-**CineWiz** is a lightweight Python toolkit for creative image composition and visual storytelling.  
-It allows you to generate AI-driven visual scenes, overlay text, add QR codes, and create comic-style renders — perfect for filmmakers, designers, and developers.
-
----
-
-## 📦 Installation
+### Installation
 
 ```bash
+# Clone the repository
 git clone https://github.com/ssmool/cinewiz.git
-cd cinewiz/genai
-pip install -r requirements.txt
-````
+cd cinewiz
 
-Import CineWiz in your project:
+# Install dependencies
+pip install rembg pillow requests beautifulsoup4
+```
+
+### Basic Usage
 
 ```python
-from cinewiz.genai import *
+from cinewiz import main
+
+# Run interactive mode
+main()
 ```
 
----
+### Command Line Example
 
-## ⚙️ Function Reference
-
-| **Function**                                                          | **Description**                                  | **Parameters**                         | **Returns**          |
-| --------------------------------------------------------------------- | ------------------------------------------------ | -------------------------------------- | -------------------- |
-| `set_start_first_use_config()`                                        | Initializes CineWiz environment on first launch. | None                                   | `None`               |
-| `set_init(_buff_glob_file)`                                           | Loads an initial image or buffer.                | `start_image.png`                      | `_buff_glob_file`    |
-| `set_lang(_buff_lang_flag)`                                           | Sets language for text or corpus.                | Language flag (`'en'`, `'fr'`, etc.)   | `_buff_lang_flag`    |
-| `add_read_lib_inri_uri(_buff_uri)`                                    | Adds INRI corpus source via URI.                 | `_buff_uri`                            | `None`               |
-| `add_read_lib(_buff_uri)`                                             | Adds external read library.                      | `_buff_uri`                            | `None`               |
-| `set_picture(image_file, flag_rmbg)`                                  | Loads image, optionally removes background.      | `image_file` (path), `flag_rmbg` (0/1) | `_w` (image buffer)  |
-| `set_picture_remove_bg(_buff)`                                        | Removes background directly from buffer.         | `_buff`                                | `_fl_out`            |
-| `set_board(width, height, color_rgb)`                                 | Creates new drawing board/canvas.                | Width (px), Height (px), `(R,G,B)`     | Canvas buffer        |
-| `set_text(file_name, txt, x, y, format, color, font_file, font_size)` | Writes text onto board.                          | Text and style parameters              | Rendered text buffer |
-| `set_text_inri(file_name, keywords, glob_lang)`                       | Builds INRI text dataset.                        | `file_name`, `keywords`, `glob_lang`   | `_dbas_txt_coll`     |
-| `set_inri_corpus_text_add_lib(_buff)`                                 | Adds text entry to INRI corpus library.          | `_buff`                                | `None`               |
-| `get_inri_corpus_text_lib(_file_name)`                                | Reads text corpus entry.                         | `_file_name`                           | `_buff`              |
-| `set_glob_lang(glob_lang_cod, _dbas_txt)`                             | Applies global language corpus.                  | Code, text data                        | `_tot_txt_glob_lang` |
-| `get_yolo_config(_buff_glob_fl)`                                      | Loads YOLO object detection configuration.       | Config buffer                          | `None`               |
-| `get_yolo_detect_tags(_buff_cc)`                                      | Detects object tags via YOLO model.              | Image buffer                           | `_buff_tag_kpi`      |
-| `search_image(key_words, _buff_glob_lib_flag, x, y, flag_rmbg=0)`     | Finds and positions image by keyword.            | keywords, flags, coords                | `_buff_w`            |
-| `set_file_lib(_buff_data_file)`                                       | Adds data file to CineWiz library.               | `_buff_data_file`                      | `None`               |
-| `get_file_lib_name(_file_name)`                                       | Retrieves library file name.                     | `_file_name`                           | `_buff`              |
-| `set_data_text_lib(_buff_data_text)`                                  | Adds data text to library.                       | `_buff_data_text`                      | `None`               |
-| `get_text_lib_name(_file_name)`                                       | Retrieves stored text name.                      | `_file_name`                           | `_buff`              |
-| `search_data(key_words, _buff_uri_index)`                             | Searches for textual data.                       | keywords, index buffer                 | `_buff_txt`          |
-| `set_background(type, key_words, _buff_glob_fl, _buff_flag_smx)`      | Sets or generates background.                    | type, keywords, file, flag             | None                 |
-| `set_comix(_buff_glob_data)`                                          | Converts image to comic-style.                   | image buffer                           | Comic image          |
-| `set_qrcode(text)`                                                    | Creates QR code image.                           | text or URL                            | `_qrcode`            |
-| `add_qrcode(_qrcode, x, y)`                                           | Places QR code on board.                         | `_qrcode`, coordinates                 | `None`               |
-| `set_sign(author, email)`                                             | Adds author signature metadata.                  | author name, email                     | None                 |
-
----
-
-## 🔁 Usage Flow Diagram
-
-```text
- ┌─────────────────────────┐
- │ set_start_first_use_config │
- └──────────────┬──────────┘
-                │
-                ▼
-          ┌───────────────┐
-          │ set_init()     │
-          └──────┬────────┘
-                 │
-                 ▼
-          ┌───────────────┐
-          │ set_board()    │
-          └──────┬────────┘
-                 │
-                 ▼
-          ┌───────────────┐
-          │ set_background │
-          └──────┬────────┘
-                 │
-                 ▼
-          ┌───────────────┐
-          │ set_picture()  │
-          └──────┬────────┘
-                 │
-                 ▼
-          ┌───────────────┐
-          │ set_text()     │
-          └──────┬────────┘
-                 │
-                 ▼
-          ┌───────────────┐
-          │ set_qrcode()   │
-          └──────┬────────┘
-                 │
-                 ▼
-          ┌───────────────┐
-          │ add_qrcode()   │
-          └──────┬────────┘
-                 │
-                 ▼
-          ┌───────────────┐
-          │ set_comix()    │
-          └──────┬────────┘
-                 │
-                 ▼
-          ┌───────────────┐
-          │ set_sign()     │
-          └───────────────┘
+```bash
+python cinewiz.py
 ```
 
----
-
-## 🧾 License
-
-**MIT License**
-Copyright © [ssmool](https://github.com/ssmool)
-
----
-
-> 💡 *Tip:* For advanced automation, combine CineWiz with YOLO object detection and INRI text corpus functions to create AI-enhanced storyboards, movie covers, and comic scenes.
-
+Then enter your prompt:
+```
+cat dog "Hello World" bird "Beautiful Sunset"
 ```
 
-## 💡 Why Cinewiz?
+This will:
+1. Search Bing for images: `cat`, `dog`, `bird`
+2. Download the first image for each keyword
+3. Remove backgrounds from all images
+4. Add text overlays: `Hello World` and `Beautiful Sunset`
+5. Compose everything into a single PNG file
 
-**Cinewiz** is part of a larger creative and modular system called **e-Wally**, which aims to develop a modern **Unix-like environment** for studios, multimedia servers, and content production offices. Its initial version is known as **CineOS Barsotti – Unix Like @buskplay**.
+## 📘 Function Reference
 
-## 🙌 Special Thanks
+| Function | Description | Parameters |
+|----------|-------------|------------|
+| `parse_prompt()` | Separates image keywords from text in quotes | `search_query` (str) |
+| `BingImageScraper.search_images()` | Searches Bing for images by keyword | `keyword`, `limit` |
+| `BingImageScraper.download_image()` | Downloads image from URL | `url`, `keyword` |
+| `ImageComposer.add_image()` | Adds image to canvas with optional BG removal | `image_path`, `position`, `size`, `remove_bg` |
+| `ImageComposer.add_text()` | Adds text overlay to composition | `text`, `position`, `font_size`, `color` |
+| `ImageComposer.save_composition()` | Saves final image as PNG | `filename` |
 
-* 🐍 Thanks to the **Python language** for its power, simplicity, and vibrant community
-* 🖼️ Shout-out to the **Pillow library** for enabling rich image manipulation
-* 🤝 Ongoing support from the **open-source community** and developers worldwide
+## 🔄 Usage Flow Diagram
+
+```
+┌─────────────────────┐
+│  Enter Prompt       │
+│  "cat dog 'text'"   │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│  parse_prompt()     │
+│  Split keywords &   │
+│  text overlays      │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│  BingImageScraper   │
+│  Search & download  │
+│  images by keyword  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│  ImageComposer      │
+│  Create canvas      │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│  For each image:    │
+│  • Remove background│
+│  • Resize           │
+│  • Paste to canvas  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│  Add text overlays  │
+│  from quotes        │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│  Save composition   │
+│  as PNG file        │
+└─────────────────────┘
+```
+
+## 🎯 Example Outputs
+
+### Prompt: `mountain beach "Summer Vibes" forest`
+
+Creates a composition with:
+- Mountain landscape (background removed)
+- Beach scene (background removed)
+- Forest image (background removed)
+- "Summer Vibes" text overlay
+
+### Prompt: `"Welcome" city night "CineWiz"`
+
+Creates a composition with:
+- City night image (background removed)
+- "Welcome" text overlay
+- "CineWiz" text overlay (with decorative styling)
+
+## 🛠️ Advanced Usage
+
+### Custom Font Support
+
+```python
+# Add text with custom font
+composer.add_text(
+    "Custom Text",
+    position=(100, 100),
+    font_size=32,
+    color=(255, 0, 0),
+    font_path="/path/to/font.ttf",
+    multiline=True
+)
+```
+
+### Adjust Image Layout
+
+```python
+# Custom grid positions
+positions = [
+    (0, 0), (640, 0), (1280, 0),
+    (0, 360), (640, 360), (1280, 360)
+]
+image_size = (600, 600)
+```
+
+## 📋 Requirements
+
+- Python 3.7+
+- Internet connection (for Bing image search)
+- Required packages:
+  - `rembg` – AI background removal
+  - `Pillow` – Image processing
+  - `requests` – HTTP requests
+  - `beautifulsoup4` – HTML parsing
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## 🙏 Acknowledgments
+
+- [Bing Image Search](https://www.bing.com/images) – Image source
+- [rembg](https://github.com/danielgatis/rembg) – Background removal
+- [Pillow](https://python-pillow.org/) – Image processing
+- [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) – HTML parsing
+
+## 📞 Contact & Support
+
+- **GitHub Issues**: [Report a bug](https://github.com/ssmool/cinewiz/issues)
+- **Author**: #asytrick
+- **Project Link**: [https://github.com/ssmool/cinewiz](https://github.com/ssmool/cinewiz)
+
+## 🌟 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ssmool/cinewiz&type=Date)](https://star-history.com/#ssmool/cinewiz&Date)
+
+---
+
+**CineWiz** – Creative AI for Multimedia Content | Open Source | Built in Python 🐍
+```
+
+## Key Sections for Your GitHub README
+
+1. **Badges** – Quick status indicators (Python version, license, PyPI)
+2. **Key Features** – Visual highlights of what CineWiz can do
+3. **Quick Start** – Installation and basic usage
+4. **Function Reference** – Table of main functions from your code
+5. **Usage Flow Diagram** – ASCII art showing the pipeline
+6. **Advanced Usage** – Custom fonts and layout adjustments
+7. **Requirements** – Dependencies from your code
+8. **Contributing & License** – Open-source essentials
+
+To add this to your repository:
+
+```bash
+# Save the README
+nano README.md
+# Paste the content above
+
+# Add and commit
+git add README.md
+git commit -m "Add comprehensive README for CineWiz"
+git push origin main
+```
+
+The README is optimized for GitHub's Markdown rendering and accurately reflects the code we've been working on, including the Bing search, background removal, and text composition features.
 
 ## 🔗 License
 

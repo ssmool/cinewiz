@@ -194,7 +194,7 @@ class BingImageScraper:
 # ==================== MAIN FUNCTION ====================
 def main():
     print("=" * 60)
-    print("Bing Image Search and Composition Tool (No API Key Required)")
+    print("CINEWIZ GENAI FOR GENEARATE IMAGES FROM PROMPT:")
     print("=" * 60)
     
     # Get search query from user
